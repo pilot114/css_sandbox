@@ -1,14 +1,23 @@
 <template>
     <div>
-        <h3>Example</h3>
-        <div class="html">
-            <h4>HTML</h4>
-            <textarea v-model="editedHtml" rows=10></textarea>
+        <h3>{{ name }}</h3>
+
+        <Settings
+                :params=params
+                @changeParam="onChangeParam()"
+        ></Settings>
+
+        <div class="flex-container">
+            <div class="flex-item">
+                <h4>HTML</h4>
+                <textarea v-model="editedHtml" rows=10></textarea>
+            </div>
+            <div class="flex-item">
+                <h4>CSS</h4>
+                <textarea v-model="editedCss" rows=10></textarea>
+            </div>
         </div>
-        <div class="css">
-            <h4>CSS</h4>
-            <textarea v-model="editedCss" rows=10></textarea>
-        </div>
+
         <div class="preview">
             <h4>Result (shadow root)</h4>
             <div v-preview="getPreview()" class="previewContent"></div>
@@ -17,6 +26,8 @@
 </template>
 
 <script>
+    import Settings from './Settings.vue'
+
     export default {
         name: 'Editor',
         data() {
@@ -25,6 +36,9 @@
                 editedCss: null,
                 preview: null,
             }
+        },
+        components: {
+            Settings
         },
         created(){
             this.updateEdited();
@@ -35,9 +49,10 @@
             }
         },
         props: {
+            name: String,
             html: String,
             css: String,
-            params: Object
+            params: Array
         },
         computed: {
             parsedHtml() {
@@ -48,13 +63,24 @@
             },
         },
         methods: {
+            onChangeParam(param) {
+                console.log(param);
+            },
             updateEdited() {
                 let preparedCss = this.css;
-                for(let key in this.params) {
-                    preparedCss = preparedCss.replace(`#${key}#`, this.params[key]);
+                for(let item in this.params) {
+                    preparedCss = preparedCss.split(`|${this.params[item].name}|`).join(this.params[item].value);
                 }
 
-                this.editedHtml = this.html;
+                preparedCss = preparedCss.split(`{`).join(' {\n');
+                preparedCss = preparedCss.split(`}`).join('}\n');
+                preparedCss = preparedCss.split(`;`).join(';\n');
+                preparedCss = preparedCss.split(`:`).join(': ');
+
+                let preparedHtml = this.html.split(`>`).join('>\n');
+                preparedHtml = preparedHtml.split(`<`).join('\n<').trim('\n');
+
+                this.editedHtml = preparedHtml;
                 this.editedCss = preparedCss;
             },
             getPreview() {
@@ -66,25 +92,25 @@
 
 <style scoped>
     textarea {
-        float:left;
+        box-sizing: border-box;
         width:100%;
-        padding: 0;
+        padding: 10px;
     }
 
-    .html{
-        float: left;
-        width: 50%;
+    .flex-container {
+        display: flex;
+        flex-direction: row;
     }
-    .css{
-        float: left;
-        width: 50%;
+
+    .flex-item{
+        flex: 50;
     }
+
     .preview{
-        float: left;
         width: 100%;
     }
     .previewContent {
-        height: 500px;
+        height: 400px;
         border: 1px solid;
     }
 </style>

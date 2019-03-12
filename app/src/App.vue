@@ -4,16 +4,11 @@
             example
         </div>
         <div class="content">
-            <select v-model="color">
-                <option value="red">red</option>
-                <option value="blue">blue</option>
-                <option value="green">green</option>
-            </select>
-
             <Editor
-                    html="<b>test</b>"
-                    css="b{color:#color#;}"
-                    :params="{color:color}"
+                    name="Example"
+                    html="<div>content</div>"
+                    css="div{color:|color|;padding:|padding|;}"
+                    :params="[{name:'color', value:'red', type:'color'}, {name:'padding', value:'5px', type:'number'}]"
             ></Editor>
         </div>
     </div>
@@ -24,14 +19,9 @@
 
     export default {
         name: 'app',
-        data() {
-            return {
-                color: 'red'
-            }
-        },
         components: {
             Editor
-        }
+        },
     }
 </script>
 
@@ -45,22 +35,25 @@
     #app {
         font-family: Helvetica, Arial, sans-serif;
         height: 100%;
+
+        display: flex;
+        flex-direction: row;
     }
     .menu {
         box-sizing: border-box;
         padding: 20px;
-        width: 25%;
+
+        flex: 20;
+
         height: 100%;
-        /* TODO replace to flex */
-        float: left;
         background-color: #eb9e41;
     }
     .content {
+        flex: 80;
+
         box-sizing: border-box;
         padding: 20px;
-        width: 75%;
         height: 100%;
-        float: right;
 
         overflow: auto;
     }
