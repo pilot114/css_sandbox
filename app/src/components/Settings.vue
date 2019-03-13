@@ -37,6 +37,43 @@
 </template>
 
 <script>
+    // первое в enum - значение по умолчанию (если значение по умолчанию есть)
+    const propertyMap = {
+        'align-content': ['stretch', 'flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'space-evenly'],
+        'align-items': ['stretch', 'flex-start', 'flex-end', 'center', 'baseline'],
+        'align-self': ['stretch', 'flex-start', 'flex-end', 'center', 'baseline'],
+        'all': ['inherit', 'initial', 'unset'],
+
+        'animation': 'ТУТ 8 СОСТАВЛЯЮЩИХ см. animation-*',
+        'animation-delay': '0s', // time(s,ms)
+        'animation-direction': ['normal', 'reverse', 'alternate', 'alternatereverse'],
+        'animation-duration': '0s', // time(s,ms)
+        'animation-iteration-count': 1, // или infinity
+        'animation-name': 'ИМЕНА АНИМАЦИЙ ЧЕРЕЗ ЗАПЯТУЮ, БУДЕТ ВЫБРАНА ПЕРАЯ ДОСТУПНАЯ', // все остальные ориентируются на эту при перечислении через запятую
+        'animation-play-state': ['running', 'paused'],
+        'animation-timing-function': ['ease', 'linear', 'ease-in', 'ease-out', 'ease-in-out', 'step-start', 'step-end', 'cubic-bezier(x,x,x,x)'],
+        'animation-fill-mode': ['none', 'forwards', 'backwards', 'both'],
+
+        'backface-visibility': ['visible', 'hidden'],
+
+        'background': 'СМ. ДАЛЕЕ (9 свойств)',
+        'background-attachment': ['scroll', 'fixed', 'local'],
+        'background-blend-mode': ['normal', 'multiply', 'screen', 'overlay', 'darken', 'lighten', 'color-dodge', 'color-burn', 'hard-light', 'soft-light',
+            'difference', 'exclusion', 'hue', 'saturation', 'color', 'luminosity'],
+        'background-clip': ['border-box', 'padding-box', 'content-box', 'text'],
+        'background-color': 'transparent', // color
+        'background-image': 'url(http://qwerty)', // url
+        'background-origin': ['padding-box', 'border-box', 'content-box'],
+        'background-position': '0% 0%', // position
+        'background-repeat': ['repeat', 'no-repeat', 'space', 'round', 'repeat-x', 'repeat-y'], // тут сложное правило!
+        'background-size': ['auto', 'cover', 'contain'], // тут тоже, например, можно впихнуть проценты
+
+        'border': 'ТУТ НАРКОМАНИЯ - 32 СВОЙСТВА',
+        // ...
+
+        
+    };
+
     export default {
         name: "Settings",
         props: {
