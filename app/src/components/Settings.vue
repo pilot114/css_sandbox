@@ -71,7 +71,123 @@
         'border': 'ТУТ НАРКОМАНИЯ - 32 СВОЙСТВА',
         // ...
 
-        
+        'bottom': ['auto'], // или size (px/em/percent)
+        'box-decoration-break': ['slice', 'clone'],
+        'box-shadow': 'inset? + 2/4 size + color?',
+        'box-sizing': ['border-box', 'content-box', 'padding-box'],
+        'caption-side': ['top', 'bottom'],
+        'clear': ['none', 'left', 'right', 'both'],
+        'clip-path': ['none', 'url()', 'inset()', 'circle()', 'ellipse()', 'polygon()'],
+        'clip-rule': ['nonzero', 'evenodd'],
+        'color': 'COLOR', // color
+        'content': ['normal', 'СТРОКА ТЕКСТА', '"(" attr(href) ")"'],
+        'counter-increment': ['none', 'ИДЕНТИФИКАТОР цифра?'],
+        'counter-reset': ['none', 'ИДЕНТИФИКАТОР цифра?'],
+        'cursor': ['url()', 'auto', 'crosshair', 'default', 'e-resize', 'help', 'move', 'n-resize', 'ne-resize', 'nw-resize',
+            'pointer', 'progress', 's-resize', 'se-resize', 'sw-resize', 'text', 'w-resize', 'wait', 'inherit'],
+        'direction': ['ltr', 'rtl'],
+        'display': ['block', 'inline', 'none', 'list-item', 'contents', 'table-row-group', 'table-header-group', 'table-footer-group',
+            'table-row', 'table-cell', 'table-column-group', 'table-column', 'table-caption',
+            'ruby-base', 'ruby-text', 'ruby-base-container', 'ruby-text-container'],
+        'empty-cells': ['show', 'hide'],
+        'filter': ['none', 'blur()', 'brightness()', 'contrast()', 'dropshadow()', 'grayscale()', 'hue-rotate()', 'invert()', 'opacity()',
+            'sepia()', 'saturate()', 'url()'],
+
+        'flex': '6 СВОЙСТВ',
+        // ...
+
+        'float': ['none', 'left', 'right'],
+
+        'font': '10 СВОЙСТВ',
+        // ...
+
+        'grid': '16 СВОЙСТВ',
+        // ...
+
+        'height': ['auto'], // или size (px/em/percent)
+        'hyphens': ['manual', 'auto', 'none'],
+        'isolation': ['auto', 'isolate'],
+        'justify-content': ['flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'space-evenly'], // относиться к flex
+        'left': ['auto'], // или size (px/em/percent)
+        'left-spacing': ['normal'], // или size
+        'line-break': ['auto', 'loose', 'normal', 'strict'],
+        'line-height': ['normal'], // или size
+
+        'line-style': '3 ЗНАЧЕНИЯ',
+        // ...
+
+        'margin': '4 ЗНАЧЕНИЯ',
+        // ...
+
+        'mask': '11 ЗНАЧЕНИЙ',
+        // ...
+
+        'max-height': ['none'], // или size
+        'max-width': ['none'], // или size
+        'min-height': ['none'], // или size
+        'min-width': ['none'], // или size
+
+        'mix-blend-mode': ['normal', 'multiply', 'screen', 'overlay', 'darken', 'lighten', 'color-dodge', 'color-burn',
+            'hard-light', 'soft-light', 'difference', 'exclusion', 'hue', 'saturation', 'color', 'luminosity'],
+        'object-fit': ['fill', 'contain', 'cover', 'scale-down', 'none'],
+        'object-position': '50% 50%', // position
+        'opacity': 1, // number [0:1]
+        'order': 0, // number, не меняет порядок в DOM
+        'orphans': 2, // <=2
+
+        'outline': '4 ЗНАЧЕНИЯ',
+        //..
+
+        'overflow': '4 ЗНАЧЕНИЯ',
+        //..
+
+        'padding': '4 ЗНАЧЕНИЯ',
+        // ...
+
+        'page': ['auto', 'ID'],
+        'page-break-after': ['auto', 'always', 'avoid', 'left', 'right'],
+        'page-break-before': ['auto', 'always', 'avoid', 'left', 'right'],
+        'page-break-inside': ['auto', 'avoid'],
+        'perspective': ['none'], // или size
+        'perspective-origin': '50% 50%', // position
+        'position': ['static', 'relative', 'sticky', 'absolute', 'fixed'],
+        'quotes': "string string",
+        'resize': ['none', 'both', 'horizontal', 'vertical'],
+        'right': ['auto'], // или size (px/em/percent)
+        'shape-image-threshold': 0,
+        'shape-margin': 0, // или size
+        'shape-outside': ['none', 'margin-box', 'border-box', 'padding-box', 'contentbox', 'inset', 'circle()', 'ellipse()', 'polygon()'],
+        'size': ['auto', 'portrait', 'landscape', 'length length'], // + page-size (типа A4 и пр.)
+        'tab-size': 8, // size
+        'table-layout': ['auto', 'fixed'],
+
+        'text-align': ['start', 'end', 'left', 'right', 'center', 'justify', 'match-parent'],
+        'text-align-last': ['auto', 'start', 'end', 'left', 'right', 'center', 'justify'],
+        'text-decoration': ['none', 'underline', 'overline', 'line-through', 'blink'],
+        'text-indent': 0, // size
+        'text-orientation': ['mixed', 'upright', 'sideways'],
+        'text-rendering': ['auto', 'optimizeSpeed', 'optimizeLegibility', 'geometricPrecision'],
+        'text-shadow': ['none', 'length.color'],
+        'text-transform': ['none', 'uppercase', 'lowercase', 'capitalize'],
+
+        'top': ['auto'], // или size (px/em/percent)
+        'transform': ['none', 'list functions'],
+        'transform-origin': '50% 50%',
+        'text-style': ['flat', 'preserve-3d'],
+
+        'transition': '4 ЗНАЧЕНИЯ',
+        // ...
+
+        'unicode-bidi' : ['normal', 'embed', 'bidi-override'],
+        'vertical-align': ['baseline', 'sub', 'super', 'top', 'text-top', 'middle', 'bottom', 'text-bottom'], // + size
+        'visibility': ['visible', 'hidden', 'collapse'],
+        'white-space': ['normal', 'nowrap', 'pre', 'pre-wrap', 'pre-line'],
+        'widows': 2,
+        'width': ['auto'], // + size
+        'word-break': ['normal', 'break-all', 'keep-all'],
+        'word-spacing': ['normal'], // + size
+        'writing-mode': ['horizontal-tb', 'vertical-rl', 'vertical-lr'],
+        'z-index': ['auto'] // size
     };
 
     export default {
