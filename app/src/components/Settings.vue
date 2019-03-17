@@ -5,7 +5,6 @@
             <!--{{ param }}<br>-->
 
             <!-- todo: flex -->
-
             <span>{{ param.name }} </span>
 
             <template v-if="param.type === 'color'">
@@ -37,8 +36,7 @@
 </template>
 
 <script>
-    // первое в enum - значение по умолчанию (если значение по умолчанию есть)
-    const propertyMap = {
+    const simplePropertyMap = {
         'align-content': ['stretch', 'flex-start', 'flex-end', 'center', 'space-between', 'space-around', 'space-evenly'],
         'align-items': ['stretch', 'flex-start', 'flex-end', 'center', 'baseline'],
         'align-self': ['stretch', 'flex-start', 'flex-end', 'center', 'baseline'],
@@ -193,11 +191,13 @@
     export default {
         name: "Settings",
         props: {
-            // type: px, percent, color, enum
-            params: Array
+            params: Object
+        },
+        created() {
+            console.log(this.params);
         },
         methods: {
-            colourNameToHex(colour) {
+            colourNameToHex(color) {
                 let colours = {
                     "aliceblue":"#f0f8ff","antiquewhite":"#faebd7","aqua":"#00ffff","aquamarine":"#7fffd4","azure":"#f0ffff",
                     "beige":"#f5f5dc","bisque":"#ffe4c4","black":"#000000","blanchedalmond":"#ffebcd","blue":"#0000ff","blueviolet":"#8a2be2","brown":"#a52a2a","burlywood":"#deb887",
@@ -225,8 +225,8 @@
                     "yellow":"#ffff00","yellowgreen":"#9acd32"
                 };
 
-                if (typeof colours[colour.toLowerCase()] != 'undefined') {
-                    return colours[colour.toLowerCase()];
+                if (typeof colours[color.toLowerCase()] != 'undefined') {
+                    return colours[color.toLowerCase()];
                 }
                 return false;
             }

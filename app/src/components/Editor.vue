@@ -3,7 +3,7 @@
         <h3>{{ name }}</h3>
 
         <Settings
-                :params=params
+                :params=parsedParams
                 @changeParam="onChangeParam()"
         ></Settings>
 
@@ -34,6 +34,7 @@
             return {
                 editedHtml: null,
                 editedCss: null,
+                prepareParams: null,
                 preview: null,
             }
         },
@@ -61,6 +62,9 @@
             parsedCss() {
                 return this.editedCss || this.css;
             },
+            parsedParams() {
+                return this.prepareParams || this.params;
+            },
         },
         methods: {
             onChangeParam(param) {
@@ -68,10 +72,14 @@
             },
             updateEdited() {
                 let preparedCss = this.css;
+
+                /*
                 for(let item in this.params) {
                     preparedCss = preparedCss.split(`|${this.params[item].name}|`).join(this.params[item].value);
                 }
+                */
 
+                // форматирование
                 preparedCss = preparedCss.split(`{`).join(' {\n');
                 preparedCss = preparedCss.split(`}`).join('}\n');
                 preparedCss = preparedCss.split(`;`).join(';\n');
@@ -82,6 +90,21 @@
 
                 this.editedHtml = preparedHtml;
                 this.editedCss = preparedCss;
+
+                // конверируем css в объект
+                let cssRules = this.css.split('}').filter(x => !!x).map(x => x + '}');
+                let cssRulesPrepared = {};
+                for (let i in cssRules) {
+                    // dry =(
+                    let tmp = cssRules[i].split('{');
+                    let value = '{' + tmp[1];
+                    value = value
+                        .replace(/([a-zA-Z0-9-]+):([a-zA-Z0-9-]+)/g, "\"$1\":\"$2\"")
+                        .replace(/;/g, ',')
+                        .replace(',}', '}');
+                    cssRulesPrepared[tmp[0].trim()] = JSON.parse(value);
+                }
+                this.prepareParams = cssRulesPrepared;
             },
             getPreview() {
                 return `<style>${this.parsedCss}</style><body>${this.parsedHtml}</body>`;
@@ -110,6 +133,7 @@
         width: 100%;
     }
     .previewContent {
+        overflow: auto;
         height: 400px;
         border: 1px solid;
     }

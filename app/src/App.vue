@@ -5,10 +5,9 @@
         </div>
         <div class="content">
             <Editor
-                    name="Example"
-                    html="<div>content</div>"
-                    css="div{color:|color|;padding:|padding|;}"
-                    :params="[{name:'color', value:'red', type:'color'}, {name:'padding', value:'5px', type:'number'}]"
+                name="Example"
+                html="<div>content</div><div id='test'>content</div>"
+                css="div{color:red;padding:5px;}#test{color:green;padding:5px;}"
             ></Editor>
         </div>
     </div>
