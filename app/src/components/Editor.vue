@@ -4,7 +4,7 @@
 
         <Settings
                 :params=parsedParams
-                @changeParam="onChangeParam()"
+                @changeParam="onChangeParam"
         ></Settings>
 
         <div class="flex-container">
@@ -67,8 +67,13 @@
             },
         },
         methods: {
-            onChangeParam(param) {
-                console.log(param);
+            onChangeParam(rule, property, value) {
+                this.prepareParams[rule][property] = value;
+
+                let back = JSON.stringify(this.prepareParams);
+                // TODO: обратно в css
+                console.log(back);
+                // this.editedCss = ...
             },
             updateEdited() {
                 let preparedCss = this.css;
