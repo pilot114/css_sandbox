@@ -14,7 +14,7 @@
             </div>
             <div class="flex-item">
                 <h4>CSS</h4>
-                <textarea v-model="editedCss" rows=10></textarea>
+                <textarea v-model="editedCss" @input="editCss" rows=10></textarea>
             </div>
         </div>
 
@@ -47,7 +47,7 @@
         watch: {
             params(val) {
                 this.updateEdited();
-            }
+            },
         },
         props: {
             name: String,
@@ -67,22 +67,48 @@
             },
         },
         methods: {
+            // конверируем css в объект
+            prepareRules(css) {
+                // dry =(
+                let cssRules = css.split('}').filter(x => !!x).map(x => x + '}');
+                let cssRulesPrepared = {};
+                for (let i in cssRules) {
+                    // dry =(
+                    let tmp = cssRules[i].split('{');
+                    if (tmp.length === 2) {
+                        let value = '{' + tmp[1];
+                        value = value
+                            .replace(/([a-zA-Z0-9-]+):[ ]?([a-zA-Z0-9-]+)/g, "\"$1\":\"$2\"")
+                            .replace(/;/g, ',')
+                            .replace(',}', '}')
+                            .replace(',\n}', '\n}');
+                        cssRulesPrepared[tmp[0].trim()] = JSON.parse(value);
+                    }
+                }
+                return cssRulesPrepared;
+            },
+            editCss() {
+                this.prepareParams = this.prepareRules(this.editedCss);
+            },
             onChangeParam(rule, property, value) {
                 this.prepareParams[rule][property] = value;
 
-                let back = JSON.stringify(this.prepareParams);
-                // TODO: обратно в css
-                console.log(back);
-                // this.editedCss = ...
+                let back = '';
+                for (let i in this.prepareParams) {
+                    let styleString = i + ' {\n';
+
+                    styleString += (
+                        Object.entries(this.prepareParams[i]).reduce((styleString, [propName, propValue]) => {
+                            return `${styleString}${propName}: ${propValue};\n`;
+                        }, '')
+                    );
+                    styleString += '}\n';
+                    back += styleString;
+                }
+                this.editedCss = back;
             },
             updateEdited() {
                 let preparedCss = this.css;
-
-                /*
-                for(let item in this.params) {
-                    preparedCss = preparedCss.split(`|${this.params[item].name}|`).join(this.params[item].value);
-                }
-                */
 
                 // форматирование
                 preparedCss = preparedCss.split(`{`).join(' {\n');
@@ -96,20 +122,7 @@
                 this.editedHtml = preparedHtml;
                 this.editedCss = preparedCss;
 
-                // конверируем css в объект
-                let cssRules = this.css.split('}').filter(x => !!x).map(x => x + '}');
-                let cssRulesPrepared = {};
-                for (let i in cssRules) {
-                    // dry =(
-                    let tmp = cssRules[i].split('{');
-                    let value = '{' + tmp[1];
-                    value = value
-                        .replace(/([a-zA-Z0-9-]+):([a-zA-Z0-9-]+)/g, "\"$1\":\"$2\"")
-                        .replace(/;/g, ',')
-                        .replace(',}', '}');
-                    cssRulesPrepared[tmp[0].trim()] = JSON.parse(value);
-                }
-                this.prepareParams = cssRulesPrepared;
+                this.prepareParams = this.prepareRules(this.css);
             },
             getPreview() {
                 return `<style>${this.parsedCss}</style><body>${this.parsedHtml}</body>`;

@@ -1,10 +1,9 @@
 <template>
-    <!-- TODO: может сделать мапу css правил на допустимые значения и тогда не надо будет прокидывать params ??? -->
     <div class="container">
         <div v-for="(item, key) in params">
             <h3>{{ key }}</h3>
-            <!-- todo: flex -->
             <div v-for="(propItem, propKey) in params[key]">
+                <!-- todo: сложные свойства выносим в отдельные компоненты -->
                 <span>{{ propKey }}</span>
                 <input type="text" :value=propItem @input="changeValue(key, propKey, $event)">
                 <br>
@@ -170,9 +169,6 @@
         name: "Settings",
         props: {
             params: Object
-        },
-        created() {
-            console.log(this.params);
         },
         methods: {
             changeValue(rule, property, e) {

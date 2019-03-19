@@ -7,7 +7,7 @@
             <Editor
                 name="Example"
                 html="<div>content</div><div id='test'>content</div>"
-                css="div{color:red;padding:5px;}#test{color:green;padding:5px;}"
+                css="div{color:red;padding:5px;}#test{color:green;padding:5px;background-color:black;}"
             ></Editor>
         </div>
     </div>
