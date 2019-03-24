@@ -2,10 +2,10 @@
     <div>
         <h3>{{ name }}</h3>
 
-        <Settings
+        <Control
                 :params=parsedParams
                 @changeParam="onChangeParam"
-        ></Settings>
+        ></Control>
 
         <div class="flex-container">
             <div class="flex-item">
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-    import Settings from './Settings.vue'
+    import Control from './Control.vue'
 
     export default {
         name: 'Editor',
@@ -39,7 +39,7 @@
             }
         },
         components: {
-            Settings
+            Control
         },
         created(){
             this.updateEdited();

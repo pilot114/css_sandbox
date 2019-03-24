@@ -3,9 +3,22 @@
         <div v-for="(item, key) in params">
             <h3>{{ key }}</h3>
             <div v-for="(propItem, propKey) in params[key]">
-                <!-- todo: сложные свойства выносим в отдельные компоненты -->
                 <span>{{ propKey }}</span>
-                <input type="text" :value=propItem @input="changeValue(key, propKey, $event)">
+
+                <template v-if="getParamType(cssDict[propKey]) === 'enum'">
+                    <select :value=propItem @input="changeValue(key, propKey, $event)">
+                        <option :value=item v-for="item in cssDict[propKey]">{{ item }}</option>
+                    </select>
+                </template>
+
+                <template v-if="getParamType(cssDict[propKey]) === 'color'">
+                    <input type="color" :value=colourNameToHex(propItem) @input="changeValue(key, propKey, $event)">
+                </template>
+
+                <!-- просто как текстовое поле -->
+                <template v-if="!getParamType(cssDict[propKey])">
+                    <input type="text" :value=propItem @input="changeValue(key, propKey, $event)">
+                </template>
                 <br>
             </div>
         </div>
@@ -36,7 +49,7 @@
         'background-blend-mode': ['normal', 'multiply', 'screen', 'overlay', 'darken', 'lighten', 'color-dodge', 'color-burn', 'hard-light', 'soft-light',
             'difference', 'exclusion', 'hue', 'saturation', 'color', 'luminosity'],
         'background-clip': ['border-box', 'padding-box', 'content-box', 'text'],
-        'background-color': 'transparent', // color
+        'background-color': 'color',
         'background-image': 'url(http://qwerty)', // url
         'background-origin': ['padding-box', 'border-box', 'content-box'],
         'background-position': '0% 0%', // position
@@ -54,7 +67,7 @@
         'clear': ['none', 'left', 'right', 'both'],
         'clip-path': ['none', 'url()', 'inset()', 'circle()', 'ellipse()', 'polygon()'],
         'clip-rule': ['nonzero', 'evenodd'],
-        'color': 'COLOR', // color
+        'color': 'color',
         'content': ['normal', 'СТРОКА ТЕКСТА', '"(" attr(href) ")"'],
         'counter-increment': ['none', 'ИДЕНТИФИКАТОР цифра?'],
         'counter-reset': ['none', 'ИДЕНТИФИКАТОР цифра?'],
@@ -166,7 +179,12 @@
     };
 
     export default {
-        name: "Settings",
+        name: "Control",
+        data () {
+            return {
+                cssDict: simplePropertyMap
+            }
+        },
         props: {
             params: Object
         },
@@ -322,7 +340,16 @@
                 if (typeof colours[color.toLowerCase()] != 'undefined') {
                     return colours[color.toLowerCase()];
                 }
-                return false;
+                return color;
+            },
+            getParamType(param) {
+                if (Array.isArray(param)) return 'enum';
+                if (param === 'color') return 'color';
+
+                // debug ещё нетипизированного
+                console.log(param);
+
+                return null;
             }
         }
     }
