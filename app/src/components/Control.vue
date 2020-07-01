@@ -1,13 +1,13 @@
 <template>
     <div class="container">
-        <div v-for="(item, key) in params">
+        <div v-for="(item, key) in params" :key=key>
             <h3>{{ key }}</h3>
-            <div v-for="(propItem, propKey) in params[key]">
+            <div v-for="(propItem, propKey) in params[key]" :key=propKey>
                 <span>{{ propKey }}</span>
 
                 <template v-if="getParamType(cssDict[propKey]) === 'enum'">
                     <select :value=propItem @input="changeValue(key, propKey, $event)">
-                        <option :value=item v-for="item in cssDict[propKey]">{{ item }}</option>
+                        <option :value=item v-for="(item, key) in cssDict[propKey]" :key=key>{{ item }}</option>
                     </select>
                 </template>
 
