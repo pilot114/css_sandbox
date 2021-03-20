@@ -45,7 +45,7 @@
             this.updateEdited();
         },
         watch: {
-            params(val) {
+            params() {
                 this.updateEdited();
             },
         },

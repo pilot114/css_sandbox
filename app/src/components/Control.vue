@@ -188,6 +188,8 @@
         props: {
             params: Object
         },
+        created() {
+        },
         methods: {
             changeValue(rule, property, e) {
                 this.$emit('changeParam', rule, property, e.target.value);
